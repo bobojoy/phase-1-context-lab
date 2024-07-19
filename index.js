@@ -1,5 +1,65 @@
 /* Your Code Here */
+function createEmployeeRecord(data) {
+  return {
+    firstName: data[0],
+    familyName: data[1],
+    title: data[2],
+    payPerHour: data[3],
+    timeInEvents: [],
+    timeOutEvents: [],
+  };
+}
 
+function createEmployeeRecords(data) {
+  return data.map((rec) => createEmployeeRecord(rec));
+}
+
+function createTimeInEvent(str) {
+  let [inDate, inHour] = str.split(" ");
+  this.timeInEvents.push({
+    type: "TimeIn",
+    date: inDate,
+    hour: parseInt(inHour, 10),
+  });
+  return this;
+}
+
+function createTimeOutEvent(str) {
+  let [outDate, outHour] = str.split(" ");
+  this.timeOutEvents.push({
+    type: "TimeOut",
+    date: outDate,
+    hour: parseInt(outHour, 10),
+  });
+  return this;
+}
+
+function hoursWorkedOnDate(str) {
+  let date = str.split(" ")[0];
+  let inTime = this.timeInEvents.find((day) => day.date === date);
+  let outTime = this.timeOutEvents.find((day) => day.date === date);
+  return (outTime.hour - inTime.hour) / 100;
+}
+
+function wagesEarnedOnDate(str) {
+  return hoursWorkedOnDate.call(this, str) * this.payPerHour;
+}
+
+
+// Fuction to find employee by first name
+function findEmployeeByFirstName(createEmployeeRecords, firstName) {
+    return createEmployeeRecords.find(function(employee) {
+      return employee.firstName === firstName;
+    });
+  }
+   
+
+// function to calculate wages earned for all employee 
+function calculatePayroll(employee) {
+   const allWages = employee.map(record => allWagesFor(record));
+   const totalPayroll = allWages.reduce((acc, curr) => acc + curr, 0);
+   return totalPayroll;
+}
 /*
  We're giving you this function. Take a look at it, you might see some usage
  that's new and different. That's because we're avoiding a well-known, but
